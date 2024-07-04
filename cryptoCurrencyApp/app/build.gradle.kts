@@ -5,6 +5,7 @@ plugins {
     id ("androidx.navigation.safeargs.kotlin")
     id("com.google.gms.google-services")
     id ("com.google.devtools.ksp")
+    id("kotlin-parcelize")
 
 }
 
@@ -56,6 +57,7 @@ dependencies {
     implementation("com.google.firebase:firebase-firestore")
     implementation("com.google.firebase:firebase-storage")
     implementation("com.google.firebase:firebase-auth")
+    implementation ("com.github.bumptech.glide:glide:4.16.0")
 
     val lifecycle_version = "2.7.0"
 

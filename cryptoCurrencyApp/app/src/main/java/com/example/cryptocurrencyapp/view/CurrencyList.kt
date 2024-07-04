@@ -1,6 +1,7 @@
 package com.example.cryptocurrencyapp.view
 
 import android.os.Bundle
+import android.os.Parcelable
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -37,7 +38,7 @@ class CurrencyList : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(this)[CurrencyListViewModel::class.java]
-        viewModel.getCurrencies()
+        viewModel.getCurrencies(requireContext())
 
         adapter = MyAdapter(currList)
         binding.recyclerView.layoutManager = LinearLayoutManager(this@CurrencyList.context)
@@ -46,7 +47,7 @@ class CurrencyList : Fragment() {
         binding.refreshLayout.setOnRefreshListener {
             binding.recyclerView.visibility = View.GONE
             binding.ListProgressBar.visibility = View.VISIBLE
-            viewModel.getCurrencies()
+            viewModel.getCurrencies(requireContext())
             binding.refreshLayout.isRefreshing = false
         }
         observerLiveData()

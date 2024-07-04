@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.bumptech.glide.Glide
 import com.example.cryptocurrencyapp.R
 import com.example.cryptocurrencyapp.databinding.FragmentCurrencyDetailsBinding
 import com.example.cryptocurrencyapp.databinding.FragmentCurrencyListBinding
@@ -33,8 +34,36 @@ class CurrencyDetails : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         arguments?.let {
             val currency = CurrencyDetailsArgs.fromBundle(it)
-            binding.textViewName.text = currency.currency
-            binding.textViewPrice.text = currency.price
+            binding.textId.text = "ID: " + currency.currency.id
+            binding.textSymbol.text = "Symbol: " + currency.currency.symbol
+            binding.textName.text = "Name: " + currency.currency.name
+            Glide.with(requireContext())
+                .load(currency.currency.image)
+                .into(binding.textImage)
+            binding.textCurrentPrice.text = "Current Price: " + currency.currency.currentPrice.toString()
+            binding.textMarketCap.text = "Market Cap: " + currency.currency.marketCap.toString()
+            binding.textMarketCapRank.text = "Market Cap Rank: " + currency.currency.marketCapRank.toString()
+            binding.textFullyDilutedValuation.text = "Fully Diluted Valuation: " + currency.currency.fullyDilutedValuation.toString()
+            binding.textTotalVolume.text = "Total Volume: " + currency.currency.totalVolume.toString()
+            binding.textHigh24h.text = "High 24h: " + currency.currency.high24h.toString()
+            binding.textLow24h.text = "Low 24h: " + currency.currency.low24h.toString()
+            binding.textPriceChange24h.text = "Price Change 24h: " + currency.currency.priceChange24h.toString()
+            binding.textPriceChangePercentage24h.text = "Price Change Percentage 24h: " + currency.currency.priceChangePercentage24h.toString()
+            binding.textMarketCapChange24h.text = "Market Cap Change 24h: " + currency.currency.marketCapChange24h.toString()
+            binding.textMarketCapChangePercentage24h.text = "Market Cap Change Percentage 24h: " + currency.currency.marketCapChangePercentage24h.toString()
+            binding.textCirculatingSupply.text = "Circulating Supply: " + currency.currency.circulatingSupply.toString()
+            binding.textTotalSupply.text = "Total Supply: " + currency.currency.totalSupply.toString()
+            binding.textMaxSupply.text = "Max Supply: " + currency.currency.maxSupply.toString()
+            binding.textAth.text = "All-Time High (ATH): " + currency.currency.ath.toString()
+            binding.textAthChangePercentage.text = "ATH Change Percentage: " + currency.currency.athChangePercentage.toString()
+            binding.textAthDate.text = "ATH Date: " + currency.currency.athDate
+            binding.textAtl.text = "All-Time Low (ATL): " + currency.currency.atl.toString()
+            binding.textAtlChangePercentage.text = "ATL Change Percentage: " + currency.currency.atlChangePercentage.toString()
+            binding.textAtlDate.text = "ATL Date: " + currency.currency.atlDate
+            binding.textLastUpdated.text = "Last Updated: " + currency.currency.lastUpdated
+
+
+
         }
     }
 

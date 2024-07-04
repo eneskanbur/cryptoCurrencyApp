@@ -6,7 +6,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class CurrencyAPIService {
 
-    private val retrofit = Retrofit.Builder().baseUrl("https://raw.githubusercontent.com/")
+    private val retrofit = Retrofit.Builder().baseUrl("https://api.coingecko.com/")
         .addConverterFactory(GsonConverterFactory.create())
         .build()
         .create(CurrencyAPI::class.java)

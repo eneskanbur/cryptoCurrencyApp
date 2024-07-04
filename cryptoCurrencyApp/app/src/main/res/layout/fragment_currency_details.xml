@@ -8,29 +8,219 @@
     tools:context=".view.CurrencyDetails">
 
 
-    <TextView
-        android:id="@+id/textViewName"
-        android:layout_width="250dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:textAlignment="center"
-        android:gravity="center"
-        android:textSize="45dp"
-        android:text="TextView"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_margin="10dp">
 
-    <TextView
-        android:id="@+id/textViewPrice"
-        android:layout_width="250dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:textAlignment="center"
-        android:gravity="center"
-        android:textSize="45dp"
-        android:text="TextView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewName" />
+        <ImageView
+            android:id="@+id/text_image"
+            android:layout_width="45sp"
+            android:layout_height="45sp"
+            android:layout_marginBottom="5dp"
+            android:layout_gravity="center"
+            android:text="Image URL: "
+            />
+
+        <TextView
+            android:id="@+id/text_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:text="ID: "
+            android:textSize="17sp" />
+
+        <TextView
+            android:id="@+id/text_symbol"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:text="Symbol: "
+            android:textSize="17sp" />
+
+        <TextView
+            android:id="@+id/text_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:text="Name: "
+            android:textSize="17sp" />
+
+        <TextView
+            android:id="@+id/textCurrentPrice"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:text="Current Price: "
+            android:textSize="17sp" />
+
+
+
+        <TextView
+            android:id="@+id/text_market_cap"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:text="Market Cap: "
+            android:textSize="17sp" />
+
+        <TextView
+            android:id="@+id/text_market_cap_rank"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:text="Market Cap Rank: "
+            android:textSize="17sp" />
+
+        <TextView
+            android:id="@+id/text_fully_diluted_valuation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:text="Fully Diluted Valuation: "
+            android:textSize="17sp" />
+
+        <TextView
+            android:id="@+id/text_total_volume"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:text="Total Volume: "
+            android:textSize="17sp" />
+
+        <TextView
+            android:id="@+id/text_high_24h"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:text="High 24h: "
+            android:textSize="17sp" />
+
+        <TextView
+            android:id="@+id/text_low_24h"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:text="Low 24h: "
+            android:textSize="17sp" />
+
+        <TextView
+            android:id="@+id/text_price_change_24h"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:text="Price Change 24h: "
+            android:textSize="17sp" />
+
+        <TextView
+            android:id="@+id/text_price_change_percentage_24h"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:text="Price Change Percentage 24h: "
+            android:textSize="17sp" />
+
+        <TextView
+            android:id="@+id/text_market_cap_change_24h"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:text="Market Cap Change 24h: "
+            android:textSize="17sp" />
+
+        <TextView
+            android:id="@+id/text_market_cap_change_percentage_24h"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:text="Market Cap Change Percentage 24h: "
+            android:textSize="17sp" />
+
+        <TextView
+            android:id="@+id/text_circulating_supply"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:text="Circulating Supply: "
+            android:textSize="17sp" />
+
+        <TextView
+            android:id="@+id/text_total_supply"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:text="Total Supply: "
+            android:textSize="17sp" />
+
+        <TextView
+            android:id="@+id/text_max_supply"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:text="Max Supply: "
+            android:textSize="17sp" />
+
+        <TextView
+            android:id="@+id/text_ath"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:text="All-Time High (ATH): "
+            android:textSize="17sp" />
+
+        <TextView
+            android:id="@+id/text_ath_change_percentage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:text="ATH Change Percentage: "
+            android:textSize="17sp" />
+
+        <TextView
+            android:id="@+id/text_ath_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:text="ATH Date: "
+            android:textSize="17sp" />
+
+        <TextView
+            android:id="@+id/text_atl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:text="All-Time Low (ATL): "
+            android:textSize="17sp" />
+
+        <TextView
+            android:id="@+id/text_atl_change_percentage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:text="ATL Change Percentage: "
+            android:textSize="17sp" />
+
+        <TextView
+            android:id="@+id/text_atl_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:text="ATL Date: "
+            android:textSize="17sp" />
+
+        <TextView
+            android:id="@+id/text_last_updated"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:text="Last Updated: "
+            android:textSize="17sp" />
+
+    </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

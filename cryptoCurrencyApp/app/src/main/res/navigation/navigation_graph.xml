@@ -48,10 +48,7 @@
         android:label="fragment_currency_details"
         tools:layout="@layout/fragment_currency_details" >
         <argument
-            android:name="price"
-            app:argType="string" />
-        <argument
             android:name="currency"
-            app:argType="string" />
+            app:argType="com.example.cryptocurrencyapp.model.Currency" />
     </fragment>
 </navigation>
