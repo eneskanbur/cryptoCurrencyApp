@@ -43,6 +43,7 @@ class SignUpPage : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.signUpPageImageView.setImageResource(R.drawable.crypto)
+
         binding.signUpButton.setOnClickListener {
             signUp(it)
         }

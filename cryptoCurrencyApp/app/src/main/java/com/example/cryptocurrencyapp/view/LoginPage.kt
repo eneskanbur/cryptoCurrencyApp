@@ -43,6 +43,7 @@ class LoginPage : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.imageView.setImageResource(R.drawable.crypto)
+
         binding.signUpTextView.setOnClickListener {
             goToSignUpPage(it)
         }
