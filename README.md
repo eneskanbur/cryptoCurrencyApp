@@ -15,4 +15,5 @@ CryptocurrencyApp is an Android application that allows users to view details of
 - Retrofit for API calls
 - RecyclerView for list display
 
-![Login Page](login_page.jpg)
+<img src="login_page.jpg" alt="Logo" width="200" height="100">
+
