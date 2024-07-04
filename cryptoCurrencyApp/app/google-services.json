@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "81577888994",
+    "project_id": "cryptocurrencyapp-fbb32",
+    "storage_bucket": "cryptocurrencyapp-fbb32.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:81577888994:android:4591e2799ba9afa1e162bb",
+        "android_client_info": {
+          "package_name": "com.example.cryptocurrencyapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAj30SGWRyV_47E6MapIPRhkxiZKe15phs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

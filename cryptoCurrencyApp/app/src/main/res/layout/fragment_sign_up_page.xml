@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.LoginPage">
+
+
+    <ImageView
+        android:id="@+id/signUpPageImageView"
+        android:layout_width="210dp"
+        android:layout_height="240dp"
+        android:layout_marginTop="30dp"
+        android:src="@drawable/ic_launcher_background"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/signUpPageTextEmailAddress"
+        android:layout_width="240dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="30dp"
+        android:ems="10"
+        android:hint="e-mail"
+        android:inputType="textEmailAddress"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/signUpPageImageView" />
+
+    <EditText
+        android:id="@+id/signUpPageNameText"
+        android:layout_width="240dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="25dp"
+        android:ems="10"
+        android:hint="name"
+        android:inputType="text"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/signUpPageTextEmailAddress" />
+
+    <EditText
+        android:id="@+id/signUpPagePasswordText"
+        android:layout_width="240dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="25dp"
+        android:ems="10"
+        android:hint="*********"
+        android:inputType="textPassword"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/signUpPageNameText" />
+
+    <Button
+        android:id="@+id/signUpButton"
+        android:layout_width="160dp"
+        android:layout_height="63dp"
+        android:layout_marginTop="30dp"
+        android:onClick="signUpClick"
+        android:text="Sign Up"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/signUpPagePasswordText" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
