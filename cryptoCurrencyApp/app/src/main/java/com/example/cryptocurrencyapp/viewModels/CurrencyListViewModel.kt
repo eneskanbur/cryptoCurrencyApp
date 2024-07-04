@@ -9,22 +9,20 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class CurrencyListViewModel: ViewModel() {
+class CurrencyListViewModel : ViewModel() {
 
-    private val currrencyAPIService = CurrencyAPIService()
+    private val currencyAPIService = CurrencyAPIService()
     val currencies = MutableLiveData<List<Currency>>()
     val currenciesLoading = MutableLiveData<Boolean>()
 
-
-    fun getCurrencies(){
+    fun getCurrencies() {
         viewModelScope.launch(Dispatchers.IO) {
-            currenciesLoading.value = true
-           val getCurrencies = currrencyAPIService.getData()
-            withContext(Dispatchers.Main){
+            currenciesLoading.postValue(true)
+            val getCurrencies = currencyAPIService.getData()
+            withContext(Dispatchers.Main) {
                 currenciesLoading.value = false
                 currencies.value = getCurrencies
             }
         }
     }
-
 }

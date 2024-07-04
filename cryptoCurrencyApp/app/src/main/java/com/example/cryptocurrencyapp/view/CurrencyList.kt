@@ -16,7 +16,7 @@ class CurrencyList : Fragment() {
 
     private var _binding: FragmentCurrencyListBinding? = null
     private val binding get() = _binding!!
-    private lateinit var currList : List<Currency>
+    private var currList : List<Currency> = emptyList()
     private lateinit var viewModel : CurrencyListViewModel
     private lateinit var adapter : MyAdapter
 
@@ -39,28 +39,24 @@ class CurrencyList : Fragment() {
         viewModel = ViewModelProvider(this)[CurrencyListViewModel::class.java]
         viewModel.getCurrencies()
 
-
-       /* CoroutineScope(Dispatchers.IO).launch {
-            currList = retrofit.getCurrency()
-            currList.forEach {
-                println(it.currency)
-            }
-        }*/
-
         adapter = MyAdapter(currList)
         binding.recyclerView.layoutManager = LinearLayoutManager(this@CurrencyList.context)
         binding.recyclerView.adapter = adapter
+
         binding.refreshLayout.setOnRefreshListener {
             binding.recyclerView.visibility = View.GONE
             binding.ListProgressBar.visibility = View.VISIBLE
             viewModel.getCurrencies()
             binding.refreshLayout.isRefreshing = false
         }
+        observerLiveData()
     }
 
     private fun observerLiveData(){
             viewModel.currencies.observe(viewLifecycleOwner){
             adapter = MyAdapter(it)
+            binding.recyclerView.layoutManager = LinearLayoutManager(this@CurrencyList.context)
+            binding.recyclerView.adapter = adapter
             binding.recyclerView.visibility = View.VISIBLE
         }
 

@@ -25,7 +25,6 @@ class MyAdapter (val currencyList: List<Currency>) : RecyclerView.Adapter<MyAdap
 
     override fun onBindViewHolder(holder: myViewHolder, position: Int) {
         holder.binding.currencyNameTextView.text = currencyList[position].currency
-        holder.binding.textViewPrice.text = currencyList[position].price
         holder.itemView.setOnClickListener {
             val action = CurrencyListDirections.actionCurrencyListToCurrencyDetails(currencyList[position].price,currencyList[position].currency)
             Navigation.findNavController(it).navigate(action)

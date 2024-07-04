@@ -31,11 +31,11 @@ class CurrencyDetails : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        /*arguments?.let {
+        arguments?.let {
             val currency = CurrencyDetailsArgs.fromBundle(it)
-            binding.textViewName.text = currency.currency.getCurrName()
-            binding.textViewPrice.text = currency.currency.getCurrPrice()+"$"
-        }*/
+            binding.textViewName.text = currency.currency
+            binding.textViewPrice.text = currency.price
+        }
     }
 
     override fun onDestroyView() {
