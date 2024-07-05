@@ -5,14 +5,17 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.Navigation
 import com.bumptech.glide.Glide
-import com.example.cryptocurrencyapp.R
 import com.example.cryptocurrencyapp.databinding.FragmentCurrencyDetailsBinding
-import com.example.cryptocurrencyapp.databinding.FragmentCurrencyListBinding
+import com.github.mikephil.charting.data.Entry
+import com.github.mikephil.charting.data.LineData
+import com.github.mikephil.charting.data.LineDataSet
 
 class CurrencyDetails : Fragment() {
     private var _binding: FragmentCurrencyDetailsBinding? = null
     private val binding get() = _binding!!
+    var priceList : FloatArray = FloatArray(5)
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,14 +35,30 @@ class CurrencyDetails : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        arguments?.let {
+
+
+        arguments?.let {//pricelist diye kendi classında tutabilir?
             val currency = CurrencyDetailsArgs.fromBundle(it)
+            var price = currency.currency.currentPrice.toFloat()
+
+            if (index < priceList.size) {
+                priceList[index] = price
+            } else {
+                for (i in 1 until priceList.size) {
+                    priceList[i - 1] = priceList[i]
+                }
+                priceList[priceList.size - 1] = price
+            }
+            indexUp()
+
             binding.textId.text = "ID: " + currency.currency.id
             binding.textSymbol.text = "Symbol: " + currency.currency.symbol
             binding.textName.text = "Name: " + currency.currency.name
+
             Glide.with(requireContext())
                 .load(currency.currency.image)
                 .into(binding.textImage)
+
             binding.textCurrentPrice.text = "Current Price: " + currency.currency.currentPrice.toString()
             binding.textMarketCap.text = "Market Cap: " + currency.currency.marketCap.toString()
             binding.textMarketCapRank.text = "Market Cap Rank: " + currency.currency.marketCapRank.toString()
@@ -62,13 +81,27 @@ class CurrencyDetails : Fragment() {
             binding.textAtlDate.text = "ATL Date: " + currency.currency.atlDate
             binding.textLastUpdated.text = "Last Updated: " + currency.currency.lastUpdated
 
-
-
         }
+        binding.showGraphButton.setOnClickListener {
+            showGraph(it)
+        }
+    }
+
+    fun showGraph(view: View){
+        val action = CurrencyDetailsDirections.actionCurrencyDetailsToGraphPage(priceList)
+        Navigation.findNavController(view).navigate(action)
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    companion object {
+        var index: Int = 0
+
+        fun indexUp() {
+            index++
+        }
     }
 }

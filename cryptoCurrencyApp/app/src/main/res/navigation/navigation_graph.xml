@@ -50,5 +50,18 @@
         <argument
             android:name="currency"
             app:argType="com.example.cryptocurrencyapp.model.Currency" />
+        <action
+            android:id="@+id/action_currencyDetails_to_graphPage"
+            app:destination="@id/graphPage" />
+    </fragment>
+    <fragment
+        android:id="@+id/graphPage"
+        android:name="com.example.cryptocurrencyapp.view.GraphPage"
+        android:label="fragment_graph_page"
+        tools:layout="@layout/fragment_graph_page"
+        >
+        <argument
+            android:name="priceList"
+            app:argType="float[]" />
     </fragment>
 </navigation>

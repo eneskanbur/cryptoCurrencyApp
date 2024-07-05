@@ -38,7 +38,7 @@ class CurrencyListViewModel : ViewModel() {
             } catch (e: HttpException) {
                 withContext(Dispatchers.Main) {
                     currenciesLoading.value = false
-                    errorMessage.value = "HTTP hata durumu: ${e.message}"
+                    errorMessage.value = "Sorgu Sınırına Ulaşıldı: ${e.message}"
                     showToastMessage(contex,errorMessage.value.toString())
                 }
             } catch (e: Exception) {

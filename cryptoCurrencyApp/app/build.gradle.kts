@@ -43,7 +43,10 @@ android {
     buildFeatures {
         viewBinding = true
     }
+
+
 }
+
 
 dependencies {
 
@@ -57,6 +60,8 @@ dependencies {
     implementation("com.google.firebase:firebase-firestore")
     implementation("com.google.firebase:firebase-storage")
     implementation("com.google.firebase:firebase-auth")
+
+    annotationProcessor ("com.github.bumptech.glide:compiler:4.14.2")
     implementation ("com.github.bumptech.glide:glide:4.16.0")
 
     val lifecycle_version = "2.7.0"
@@ -83,6 +88,8 @@ dependencies {
 
     implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
 
+
+    implementation ("com.github.PhilJay:MPAndroidChart:v3.1.0")
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
