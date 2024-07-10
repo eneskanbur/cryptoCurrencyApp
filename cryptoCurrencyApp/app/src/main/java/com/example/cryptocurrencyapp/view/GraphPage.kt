@@ -41,7 +41,7 @@ class GraphPage : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         lineChart = binding.lineChart
 
-        arguments?.let {
+        arguments?.let {//priceListteki verileri grafiğe ekleme
             priceList = GraphPageArgs.fromBundle(it).priceList
 
             for (index in priceList.withIndex()){

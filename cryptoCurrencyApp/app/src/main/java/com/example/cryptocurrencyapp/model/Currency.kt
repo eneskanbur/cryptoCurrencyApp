@@ -55,5 +55,8 @@ data class Currency(
     @SerializedName("atl_date")
     val atlDate: String,
     @SerializedName("last_updated")
-    val lastUpdated: String
+    val lastUpdated: String,
+    var priceStorage: MutableList<Float>? = mutableListOf(0.0F, 0.0F, 0.0F, 0.0F, 0.0F)
 ) : Parcelable
+
+

@@ -15,7 +15,7 @@ import com.github.mikephil.charting.data.LineDataSet
 class CurrencyDetails : Fragment() {
     private var _binding: FragmentCurrencyDetailsBinding? = null
     private val binding get() = _binding!!
-    var priceList : FloatArray = FloatArray(5)
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,7 +39,7 @@ class CurrencyDetails : Fragment() {
 
         arguments?.let {//pricelist diye kendi classında tutabilir?
             val currency = CurrencyDetailsArgs.fromBundle(it)
-            var price = currency.currency.currentPrice.toFloat()
+            /*var price = currency.currency.currentPrice.toFloat()
 
             if (index < priceList.size) {
                 priceList[index] = price
@@ -49,7 +49,7 @@ class CurrencyDetails : Fragment() {
                 }
                 priceList[priceList.size - 1] = price
             }
-            indexUp()
+            indexUp()*/
 
             binding.textId.text = "ID: " + currency.currency.id
             binding.textSymbol.text = "Symbol: " + currency.currency.symbol
@@ -88,7 +88,8 @@ class CurrencyDetails : Fragment() {
     }
 
     fun showGraph(view: View){
-        val action = CurrencyDetailsDirections.actionCurrencyDetailsToGraphPage(priceList)
+        val action = CurrencyDetailsDirections.actionCurrencyDetailsToGraphPage(arguments.let{ CurrencyDetailsArgs.fromBundle(it!!).currency.priceStorage?.toFloatArray()
+            ?: floatArrayOf(0.0F,0.0F,0.0F,0.0F,0.0F)  })
         Navigation.findNavController(view).navigate(action)
     }
 
