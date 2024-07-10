@@ -15,6 +15,7 @@ CryptocurrencyApp is an Android application that allows users to view details of
 - Firebase Firestore Database
 - Retrofit for API calls
 - Glide for images
+- MPAndroidChart for graphs
 - RecyclerView for list display
 
 <img src="login_page.jpg" alt="Logo" width="180" height="400">           <img src="signUp_page.jpg" alt="Logo" width="180" height="400">
