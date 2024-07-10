@@ -12,7 +12,9 @@ CryptocurrencyApp is an Android application that allows users to view details of
 - Kotlin
 - Android Jetpack (ViewModel, LiveData, Navigation Component)
 - Firebase Authentication
+- Firebase Firestore Database
 - Retrofit for API calls
+- Glide for images
 - RecyclerView for list display
 
 <img src="login_page.jpg" alt="Logo" width="180" height="400">           <img src="signUp_page.jpg" alt="Logo" width="180" height="400">
