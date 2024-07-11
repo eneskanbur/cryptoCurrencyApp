@@ -63,43 +63,63 @@ class CurrencyListViewModel : ViewModel() {
     }
 
     fun updateCurrencies(context: Context) {
-        viewModelScope.launch(Dispatchers.Main) {
-            currencies.value?.forEach { currency ->
-                if (currency.priceStorage != null) {
-                    if (currency.priceStorage!!.size == 5) {
-                        for (i in 1..4) {
-                            currency.priceStorage!!.add(i - 1, currency.priceStorage!!.get(i))
-                        }
-                        currency.priceStorage!!.add(4, currency.currentPrice.toFloat())
-                    }else {
-                        currency.priceStorage!!.add(currency.currentPrice.toFloat())
-                    }
 
-//                        if (currency.priceStorage[4] != 0.0F) {
-//                            for (i in 1..4) {
-//                                currency.priceStorage[i - 1] = currency.priceStorage[i]
-//                            }
-//                            currency.priceStorage[currency.priceStorage.size - 1] = currency.currentPrice.toFloat()
-//                        } else {
-//                            currency.priceStorage[4] = currency.currentPrice.toFloat()
-//                        }
-                    } else {
-                        showToastMessage(context, "priceStorage arrayinin boyutu yetersiz.")
+        viewModelScope.launch(Dispatchers.IO) {
+            currencies.value?.forEach { currency ->
+                var priceStorage = getPriceStorageWithSymbol(currency.symbol,context)
+                if ( priceStorage!= null) {
+                    if (priceStorage.size == 5) {
+                        for (i in 1..4) {
+                            priceStorage.add(i - 1, currency.priceStorage!!.get(i))
+                        }
+                        priceStorage!!.add(4, currency.currentPrice.toFloat())
+                        saveCurrencyPriceStorage(currency.symbol,priceStorage,context)
+                    }else {
+                        priceStorage!!.add(currency.currentPrice.toFloat())
+                        saveCurrencyPriceStorage(currency.symbol,priceStorage,context)
                     }
+                } else {
+                        showToastMessage(context, "priceStorage arrayinin boyutu yetersiz.")
                 }
             }
         }
+    }
 
+    fun saveCurrencyPriceStorage(symbol : String, priceStorage : ArrayList<Float>, context: Context){
+        viewModelScope.launch(Dispatchers.IO) {
+            val priceHistory = hashMapOf(
+                "priceStorage" to priceStorage
+            )
+
+            try {
+                db.collection("priceListHistory")
+                    .document(symbol)
+                    .set(priceHistory)
+                    .addOnSuccessListener {
+                        println(symbol)
+                        showToastMessage(context, "Veri başarıyla kaydedildi.")
+                    }
+                    .addOnFailureListener { e ->
+                        showToastMessage(context, "Veri kaydı başarısız oldu: ${e.message}")
+                    }.addOnCanceledListener {
+                        showToastMessage(context,"canceled")
+                    }
+            }catch (e: Exception){
+                showToastMessage(context, "Beklenmeyen hata: ${e.message}")
+            }
+        }
+
+    }
 
     fun saveCurrencyListHistory(context: Context) {
 
         viewModelScope.launch(Dispatchers.IO) {
             for (currency in currencies.value!!) {
-                //var a = mutableListOf(0.0F,0.0F,0.0F,0.0F,0.0F)
+
                 val priceHistory = hashMapOf(
-                    "symbol" to currency.symbol,
-                    "priceStorage" to getPriceStorageWithSymbol(currency.symbol,context) //?: mutableListOf(currency.currentPrice.toFloat(),0.0F,0.0F,currency.currentPrice.toFloat(),0.0F) )
+                    "priceStorage" to getPriceStorageWithSymbol(currency.symbol,context)  //?: mutableListOf(currency.currentPrice.toFloat(),0.0F,0.0F,currency.currentPrice.toFloat(),0.0F) )
                 )
+
                 try {
                     db.collection("priceListHistory")
                         .document(currency.symbol)
@@ -118,7 +138,7 @@ class CurrencyListViewModel : ViewModel() {
         }
     }
 
-    fun downLoadCurrencyListHistory(context: Context) {
+    /*fun downLoadCurrencyListHistory(context: Context) {
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 db.collection("priceListHistory")
@@ -139,9 +159,9 @@ class CurrencyListViewModel : ViewModel() {
             }
         }
 
-    }
+    }*/
 
-    private fun getPriceStorageWithSymbol(symbol: String,context: Context) : ArrayList<Float>{
+    fun getPriceStorageWithSymbol(symbol: String,context: Context) : ArrayList<Float>{
         var result : ArrayList<Float> = arrayListOf()
         viewModelScope.launch(Dispatchers.IO) {
             try {

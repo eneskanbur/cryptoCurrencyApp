@@ -1,13 +1,16 @@
 package com.example.cryptocurrencyapp.view
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import com.bumptech.glide.Glide
 import com.example.cryptocurrencyapp.databinding.FragmentCurrencyDetailsBinding
+import com.example.cryptocurrencyapp.viewModels.CurrencyListViewModel
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
@@ -15,7 +18,8 @@ import com.github.mikephil.charting.data.LineDataSet
 class CurrencyDetails : Fragment() {
     private var _binding: FragmentCurrencyDetailsBinding? = null
     private val binding get() = _binding!!
-
+    private lateinit var viewModel : CurrencyListViewModel
+    private var id : String = ""
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,10 +39,11 @@ class CurrencyDetails : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel = ViewModelProvider(this)[CurrencyListViewModel::class.java]
 
-
-        arguments?.let {//pricelist diye kendi classında tutabilir?
+        arguments?.let {
             val currency = CurrencyDetailsArgs.fromBundle(it)
+            id = currency.currency.id.lowercase()
             /*var price = currency.currency.currentPrice.toFloat()
 
             if (index < priceList.size) {
@@ -83,13 +88,12 @@ class CurrencyDetails : Fragment() {
 
         }
         binding.showGraphButton.setOnClickListener {
-            showGraph(it)
+            showGraph(it,requireContext())
         }
     }
 
-    fun showGraph(view: View){
-        val action = CurrencyDetailsDirections.actionCurrencyDetailsToGraphPage(arguments.let{ CurrencyDetailsArgs.fromBundle(it!!).currency.priceStorage?.toFloatArray()
-            ?: floatArrayOf(0.0F,0.0F,0.0F,0.0F,0.0F)  })
+    fun showGraph(view: View, context: Context){
+        val action = CurrencyDetailsDirections.actionCurrencyDetailsToGraphPage(id)
         Navigation.findNavController(view).navigate(action)
     }
 

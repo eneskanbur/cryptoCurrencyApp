@@ -6,6 +6,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.webkit.WebSettings
+import android.webkit.WebView
+import android.webkit.WebViewClient
 import com.example.cryptocurrencyapp.databinding.FragmentGraphPageBinding
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.Legend
@@ -18,9 +21,7 @@ import java.util.Collections
 class GraphPage : Fragment() {
     private var _binding: FragmentGraphPageBinding? = null
     private val binding get() = _binding!!
-    private lateinit var lineChart : LineChart
-    private lateinit var priceList: FloatArray
-    var graphList : MutableList<Entry> = mutableListOf()
+    private var id : String = ""
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,33 +40,25 @@ class GraphPage : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        lineChart = binding.lineChart
-
-        arguments?.let {//priceListteki verileri grafiğe ekleme
-            priceList = GraphPageArgs.fromBundle(it).priceList
-
-            for (index in priceList.withIndex()){
-                graphList.add(Entry(index.value,index.index.toFloat()))
-            }
-
-            // TODO: çözüm
-            //Collections.sort(graphList, EntryXComparator()) Bu sorunu çözüyor ama nasıl?
-
-            val dataSet = LineDataSet(graphList, "Price History")
-            dataSet.color = Color.RED
-            dataSet.lineWidth = 2.5f
-            dataSet.fillAlpha = 110
-            dataSet.fillColor = Color.RED
-
-            val lineData = LineData(dataSet)
-            lineChart.data = lineData
-            lineChart.legend.isEnabled = true
-            lineChart.legend.textSize = 14f
-            lineChart.legend.verticalAlignment = Legend.LegendVerticalAlignment.BOTTOM
-            lineChart.legend.horizontalAlignment = Legend.LegendHorizontalAlignment.CENTER
-            lineChart.invalidate() // Refresh chart
-
+        val webView: WebView = binding.coinGeckoWebView
+        webView.settings.javaScriptEnabled = true
+        webView.webViewClient = WebViewClient()
+        arguments?.let {
+            id = GraphPageArgs.fromBundle(it).id
         }
+
+        val htmlData = """
+        <html>
+        <head>
+            <script src="https://widgets.coingecko.com/gecko-coin-price-chart-widget.js"></script>
+        </head>
+        <body>
+            <gecko-coin-price-chart-widget locale="en" outlined="true" coin-id="${id}" initial-currency="usd" width="0" height="0"></gecko-coin-price-chart-widget>
+        </body>
+        </html>
+    """
+
+        webView.loadDataWithBaseURL("https://widgets.coingecko.com", htmlData, "text/html", "UTF-8", null)
     }
 
     override fun onDestroyView() {

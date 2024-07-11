@@ -61,7 +61,7 @@
         tools:layout="@layout/fragment_graph_page"
         >
         <argument
-            android:name="priceList"
-            app:argType="float[]" />
+            android:name="id"
+            app:argType="string" />
     </fragment>
 </navigation>
