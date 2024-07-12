@@ -62,7 +62,7 @@ class CurrencyListViewModel : ViewModel() {
         }
     }
 
-    fun updateCurrencies(context: Context) {
+    /*fun updateCurrencies(context: Context) {
 
         viewModelScope.launch(Dispatchers.IO) {
             currencies.value?.forEach { currency ->
@@ -83,9 +83,9 @@ class CurrencyListViewModel : ViewModel() {
                 }
             }
         }
-    }
+    }*/
 
-    fun saveCurrencyPriceStorage(symbol : String, priceStorage : ArrayList<Float>, context: Context){
+    /*fun saveCurrencyPriceStorage(symbol : String, priceStorage : ArrayList<Float>, context: Context){
         viewModelScope.launch(Dispatchers.IO) {
             val priceHistory = hashMapOf(
                 "priceStorage" to priceStorage
@@ -109,9 +109,9 @@ class CurrencyListViewModel : ViewModel() {
             }
         }
 
-    }
+    }*/
 
-    fun saveCurrencyListHistory(context: Context) {
+    /*fun saveCurrencyListHistory(context: Context) {
 
         viewModelScope.launch(Dispatchers.IO) {
             for (currency in currencies.value!!) {
@@ -136,7 +136,7 @@ class CurrencyListViewModel : ViewModel() {
                 }
             }
         }
-    }
+    }*/
 
     /*fun downLoadCurrencyListHistory(context: Context) {
         viewModelScope.launch(Dispatchers.IO) {
@@ -161,7 +161,7 @@ class CurrencyListViewModel : ViewModel() {
 
     }*/
 
-    fun getPriceStorageWithSymbol(symbol: String,context: Context) : ArrayList<Float>{
+    /*fun getPriceStorageWithSymbol(symbol: String,context: Context) : ArrayList<Float>{
         var result : ArrayList<Float> = arrayListOf()
         viewModelScope.launch(Dispatchers.IO) {
             try {
@@ -177,5 +177,5 @@ class CurrencyListViewModel : ViewModel() {
             }
         }
         return result
-    }
+    }*/
 }

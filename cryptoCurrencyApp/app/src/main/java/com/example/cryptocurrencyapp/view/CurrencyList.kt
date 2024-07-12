@@ -57,7 +57,7 @@ class CurrencyList : Fragment() {
         viewModel.currencies.observe(viewLifecycleOwner){
             //viewModel.downLoadCurrencyListHistory(requireContext())
             //viewModel.saveCurrencyListHistory(requireContext())
-            viewModel.updateCurrencies(requireContext())
+            //viewModel.updateCurrencies(requireContext())
             adapter = MyAdapter(it)
             binding.recyclerView.layoutManager = LinearLayoutManager(this@CurrencyList.context)
             binding.recyclerView.adapter = adapter

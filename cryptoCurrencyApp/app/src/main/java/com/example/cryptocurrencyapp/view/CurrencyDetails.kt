@@ -1,25 +1,39 @@
 package com.example.cryptocurrencyapp.view
 
-import android.content.Context
+import android.graphics.Color
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.Navigation
 import com.bumptech.glide.Glide
 import com.example.cryptocurrencyapp.databinding.FragmentCurrencyDetailsBinding
+import com.example.cryptocurrencyapp.model.StockData
 import com.example.cryptocurrencyapp.viewModels.CurrencyListViewModel
+import com.example.cryptocurrencyapp.viewModels.GraphPageViewModel
+import com.github.mikephil.charting.animation.Easing
+import com.github.mikephil.charting.animation.Easing.EaseOutBack
+import com.github.mikephil.charting.animation.Easing.EasingFunction
+import com.github.mikephil.charting.charts.LineChart
+import com.github.mikephil.charting.components.Description
+import com.github.mikephil.charting.components.Legend
+import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
+import com.github.mikephil.charting.utils.EntryXComparator
+import java.util.Collections
 
 class CurrencyDetails : Fragment() {
     private var _binding: FragmentCurrencyDetailsBinding? = null
     private val binding get() = _binding!!
     private lateinit var viewModel : CurrencyListViewModel
-    private var id : String = ""
+    private lateinit var lineChart : LineChart
+    var graphList : MutableList<Entry> = mutableListOf()
+    private lateinit var viewModelGraphPage : GraphPageViewModel
+    private var xValues = arrayListOf<String>()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,22 +53,13 @@ class CurrencyDetails : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModelGraphPage = ViewModelProvider(this)[GraphPageViewModel::class.java]
         viewModel = ViewModelProvider(this)[CurrencyListViewModel::class.java]
 
         arguments?.let {
             val currency = CurrencyDetailsArgs.fromBundle(it)
-            id = currency.currency.id.lowercase()
-            /*var price = currency.currency.currentPrice.toFloat()
-
-            if (index < priceList.size) {
-                priceList[index] = price
-            } else {
-                for (i in 1 until priceList.size) {
-                    priceList[i - 1] = priceList[i]
-                }
-                priceList[priceList.size - 1] = price
-            }
-            indexUp()*/
+            viewModelGraphPage.getHistoricalData(requireContext(),currency.currency.symbol)
+            obsereLiveData()
 
             binding.textId.text = "ID: " + currency.currency.id
             binding.textSymbol.text = "Symbol: " + currency.currency.symbol
@@ -87,14 +92,7 @@ class CurrencyDetails : Fragment() {
             binding.textLastUpdated.text = "Last Updated: " + currency.currency.lastUpdated
 
         }
-        binding.showGraphButton.setOnClickListener {
-            showGraph(it,requireContext())
-        }
-    }
 
-    fun showGraph(view: View, context: Context){
-        val action = CurrencyDetailsDirections.actionCurrencyDetailsToGraphPage(id)
-        Navigation.findNavController(view).navigate(action)
     }
 
     override fun onDestroyView() {
@@ -102,11 +100,60 @@ class CurrencyDetails : Fragment() {
         _binding = null
     }
 
-    companion object {
-        var index: Int = 0
-
-        fun indexUp() {
-            index++
+    private fun obsereLiveData() {
+        viewModelGraphPage.historicalData.observe(viewLifecycleOwner) {
+            updateChart(it)
         }
     }
+
+    private fun updateChart(data: StockData) {
+        lineChart = binding.lineChart
+        graphList.clear()
+        xValues.clear()
+
+        data.values.reversed().forEachIndexed { index, value ->
+            graphList.add(Entry( index.toFloat(), value.high))
+            xValues.add(value.datetime.substring(5))
+        }
+
+
+        Collections.sort(graphList,EntryXComparator())
+        val dataSet = LineDataSet(graphList, "Price")
+        dataSet.color = Color.RED
+        dataSet.valueTextColor = Color.WHITE
+        dataSet.lineWidth = 2.5f
+        dataSet.fillAlpha = 110
+        dataSet.fillColor = Color.RED
+
+        val lineData = LineData(dataSet)
+        lineChart.data = lineData
+
+        val description: Description = lineChart.description
+        description.text = "${data.meta.symbol} price history"
+        lineChart.description = description
+        description.textSize = 14f
+        description.textColor = Color.WHITE
+        description.setPosition(450f, 30f)
+
+        val xAxis = lineChart.xAxis
+        xAxis.valueFormatter = IndexAxisValueFormatter(xValues)
+        xAxis.position = XAxis.XAxisPosition.BOTTOM
+        xAxis.setLabelCount(xValues.size, true)
+        xAxis.granularity = 15f
+        xAxis.textColor = Color.WHITE
+
+        lineChart.legend.isEnabled = true
+        lineChart.legend.textSize = 14f
+        lineChart.axisLeft.textColor = Color.WHITE
+        lineChart.axisRight.setDrawLabels(false)
+        lineChart.legend.textColor = Color.WHITE
+        lineChart.legend.verticalAlignment = Legend.LegendVerticalAlignment.BOTTOM
+        lineChart.legend.horizontalAlignment = Legend.LegendHorizontalAlignment.CENTER
+        lineChart.animateXY(2000,2000)
+        lineChart.invalidate()
+    }
+
+
+
+
 }
