@@ -5,6 +5,7 @@ import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.cryptocurrencyapp.R
 import com.example.cryptocurrencyapp.model.Currency
 import com.example.cryptocurrencyapp.service.CurrencyAPIService
 import com.google.firebase.firestore.FirebaseFirestore
@@ -21,11 +22,12 @@ class CurrencyListViewModel : ViewModel() {
     private val currencyAPIService = CurrencyAPIService()
     val currencies = MutableLiveData<List<Currency>>()
     val currenciesLoading = MutableLiveData<Boolean>()
-    val errorMessage = MutableLiveData<String>()
+    private val errorMessage = MutableLiveData<String>()
     private val db = Firebase.firestore
 
 
     fun getCurrencies(contex: Context) {
+        val context = contex
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 currenciesLoading.postValue(true)
@@ -37,19 +39,21 @@ class CurrencyListViewModel : ViewModel() {
             } catch (e: IOException) {
                 withContext(Dispatchers.Main) {
                     currenciesLoading.value = false
-                    errorMessage.value = "İnternet bağlantısı hatası: ${e.message}"
+                    errorMessage.value =
+                        context.getString(R.string.internet_baglantisi_hatasi, e.message)
                     showToastMessage(contex, errorMessage.value.toString())
                 }
             } catch (e: HttpException) {
                 withContext(Dispatchers.Main) {
                     currenciesLoading.value = false
-                    errorMessage.value = "Sorgu Sınırına Ulaşıldı: ${e.message}"
+                    errorMessage.value =
+                        context.getString(R.string.sorgu_sinirina_ulasildi, e.message)
                     showToastMessage(contex, errorMessage.value.toString())
                 }
             } catch (e: Exception) {
                 withContext(Dispatchers.Main) {
                     currenciesLoading.value = false
-                    errorMessage.value = "Beklenmeyen hata: ${e.message}"
+                    errorMessage.value = context.getString(R.string.beklenmeyen_hata, e.message)
                     showToastMessage(contex, errorMessage.value.toString())
                 }
             }
@@ -61,121 +65,4 @@ class CurrencyListViewModel : ViewModel() {
             Toast.makeText(context, errorMessage, Toast.LENGTH_LONG).show()
         }
     }
-
-    /*fun updateCurrencies(context: Context) {
-
-        viewModelScope.launch(Dispatchers.IO) {
-            currencies.value?.forEach { currency ->
-                var priceStorage = getPriceStorageWithSymbol(currency.symbol,context)
-                if ( priceStorage!= null) {
-                    if (priceStorage.size == 5) {
-                        for (i in 1..4) {
-                            priceStorage.add(i - 1, currency.priceStorage!!.get(i))
-                        }
-                        priceStorage!!.add(4, currency.currentPrice.toFloat())
-                        saveCurrencyPriceStorage(currency.symbol,priceStorage,context)
-                    }else {
-                        priceStorage!!.add(currency.currentPrice.toFloat())
-                        saveCurrencyPriceStorage(currency.symbol,priceStorage,context)
-                    }
-                } else {
-                        showToastMessage(context, "priceStorage arrayinin boyutu yetersiz.")
-                }
-            }
-        }
-    }*/
-
-    /*fun saveCurrencyPriceStorage(symbol : String, priceStorage : ArrayList<Float>, context: Context){
-        viewModelScope.launch(Dispatchers.IO) {
-            val priceHistory = hashMapOf(
-                "priceStorage" to priceStorage
-            )
-
-            try {
-                db.collection("priceListHistory")
-                    .document(symbol)
-                    .set(priceHistory)
-                    .addOnSuccessListener {
-                        println(symbol)
-                        showToastMessage(context, "Veri başarıyla kaydedildi.")
-                    }
-                    .addOnFailureListener { e ->
-                        showToastMessage(context, "Veri kaydı başarısız oldu: ${e.message}")
-                    }.addOnCanceledListener {
-                        showToastMessage(context,"canceled")
-                    }
-            }catch (e: Exception){
-                showToastMessage(context, "Beklenmeyen hata: ${e.message}")
-            }
-        }
-
-    }*/
-
-    /*fun saveCurrencyListHistory(context: Context) {
-
-        viewModelScope.launch(Dispatchers.IO) {
-            for (currency in currencies.value!!) {
-
-                val priceHistory = hashMapOf(
-                    "priceStorage" to getPriceStorageWithSymbol(currency.symbol,context)  //?: mutableListOf(currency.currentPrice.toFloat(),0.0F,0.0F,currency.currentPrice.toFloat(),0.0F) )
-                )
-
-                try {
-                    db.collection("priceListHistory")
-                        .document(currency.symbol)
-                        .set(priceHistory)
-                        .addOnSuccessListener {
-                            println(currency.symbol)
-                            showToastMessage(context, "Veri başarıyla kaydedildi.")
-                        }
-                        .addOnFailureListener { e ->
-                            showToastMessage(context, "Veri kaydı başarısız oldu: ${e.message}")
-                        }
-                } catch (e: Exception) {
-                    showToastMessage(context, "Beklenmeyen hata: ${e.message}")
-                }
-            }
-        }
-    }*/
-
-    /*fun downLoadCurrencyListHistory(context: Context) {
-        viewModelScope.launch(Dispatchers.IO) {
-            try {
-                db.collection("priceListHistory")
-                    .get()
-                    .addOnSuccessListener { documents ->
-                        for (document in documents) {
-                            val symbol = document.id
-                            val priceStorage = document.data["priceStorage"]
-                            //val priceStorageArray = priceStorage.mapNotNull { it as? Float }.toMutableList()
-                            //currencies.value?.find { it.symbol == symbol }?.priceStorage = priceStorage
-                        }
-                    }
-                    .addOnFailureListener { e ->
-                        showToastMessage(context, "Veri alınırken hata oldu: ${e.message}")
-                    }
-            } catch (e: Exception) {
-                showToastMessage(context, "Beklenmeyen hata: ${e.message}")
-            }
-        }
-
-    }*/
-
-    /*fun getPriceStorageWithSymbol(symbol: String,context: Context) : ArrayList<Float>{
-        var result : ArrayList<Float> = arrayListOf()
-        viewModelScope.launch(Dispatchers.IO) {
-            try {
-                db.collection("priceListHistory").document(symbol)
-                    .get()
-                    .addOnSuccessListener { document ->
-                        result = document.data?.mapNotNull {  it as? Float } as ArrayList<Float> }
-                    .addOnFailureListener {
-                         showToastMessage(context,"Veri çevirmede hata oldu.")
-                    }
-            }catch (e: Exception){
-                Toast.makeText(context,"Sembol ile çekilirken hata oluştu.",Toast.LENGTH_LONG).show()
-            }
-        }
-        return result
-    }*/
 }

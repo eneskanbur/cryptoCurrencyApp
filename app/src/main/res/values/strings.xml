@@ -2,4 +2,35 @@
     <string name="app_name">cryptoCurrencyApp</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="current_price">"Current Price: %1s"</string>
+    <string name="market_cap">"Market Cap: %1s "</string>
+    <string name="market_cap_rank">"Market Cap Rank: %1s"</string>
+    <string name="fully_diluted_valuation">"Fully Diluted Valuation: %1s"</string>
+    <string name="total_volume">"Total Volume: %1s"</string>
+    <string name="high_24h">"High 24h: %1s"</string>
+    <string name="low_24h">"Low 24h: %1s"</string>
+    <string name="price_change_24h">"Price Change 24h: %1s"</string>
+    <string name="price_change_percentage_24h">"Price Change Percentage 24h: %1s"</string>
+    <string name="market_cap_change_24h">"Market Cap Change 24h: %1s"</string>
+    <string name="market_cap_change_percentage_24h">"Market Cap Change Percentage 24h: %1s"</string>
+    <string name="circulating_supply">"Circulating Supply: %1s"</string>
+    <string name="total_supply">"Total Supply: %1s"</string>
+    <string name="max_supply">"Max Supply: %1s"</string>
+    <string name="all_time_high_ath">"All-Time High (ATH): %1s"</string>
+    <string name="ath_change_percentage">"ATH Change Percentage: %1s"</string>
+    <string name="ath_date">"ATH Date: %1s"</string>
+    <string name="all_time_low_atl">"All-Time Low (ATL): %1s"</string>
+    <string name="atl_change_percentage">"ATL Change Percentage: %1s"</string>
+    <string name="atl_date">"ATL Date: %1s"</string>
+    <string name="last_updated">"Last Updated: %1s"</string>
+    <string name="price_history">%1$s price history</string>
+    <string name="id">"ID: %1s"</string>
+    <string name="symbol">"Symbol: %1s"</string>
+    <string name="name">"Name: %1s"</string>
+    <string name="you_have_to_enter_an_email">You have to enter an email.</string>
+    <string name="you_have_to_enter_an_password">You have to enter an password.</string>
+    <string name="b10affdca65045bcbcedbc8fa142556c">b10affdca65045bcbcedbc8fa142556c</string>
+    <string name="internet_baglantisi_hatasi">İnternet bağlantısı hatası: %1$s</string>
+    <string name="sorgu_sinirina_ulasildi">Sorgu Sınırına Ulaşıldı: %1$s</string>
+    <string name="beklenmeyen_hata">Beklenmeyen hata: %1$s</string>
 </resources>

@@ -15,9 +15,9 @@ import com.google.firebase.ktx.Firebase
 
 class SignUpPage : Fragment() {
 
-    private var email : String = ""
-    private var name : String = ""
-    private var password : String = ""
+    private var email : String? = null
+    private var name : String? = null
+    private var password : String? = null
     private lateinit var auth: FirebaseAuth
 
 
@@ -47,6 +47,10 @@ class SignUpPage : Fragment() {
         binding.signUpButton.setOnClickListener {
             signUp(it)
         }
+
+        binding.loginTextView.setOnClickListener {
+            goToLoginPage(it)
+        }
     }
 
     fun signUp(view: View){
@@ -54,8 +58,8 @@ class SignUpPage : Fragment() {
         password = binding.signUpPagePasswordText.text.toString()
         name = binding.signUpPageNameText.text.toString()
 
-        if (email.isNotEmpty() && password.isNotEmpty()){
-            auth.createUserWithEmailAndPassword(email,password).addOnCompleteListener { task ->
+        if (!email.isNullOrEmpty() && !password.isNullOrEmpty() ){
+            auth.createUserWithEmailAndPassword(email!!,password!!).addOnCompleteListener { task ->
                 if (task.isSuccessful){
                     val action = SignUpPageDirections.actionSignUpPageToCurrencyList()
                     Navigation.findNavController(view).navigate(action)
@@ -64,10 +68,12 @@ class SignUpPage : Fragment() {
                 Toast.makeText(requireContext(),exception.localizedMessage, Toast.LENGTH_LONG).show()
             }
         }else{
-            if (email.isEmpty()){
-                Toast.makeText(requireContext(),"You have to enter an email.", Toast.LENGTH_LONG).show()
-            }else if (password.isEmpty()){
-                Toast.makeText(requireContext(),"You have to enter an password.", Toast.LENGTH_LONG).show()
+            if (email.isNullOrEmpty()){
+                Toast.makeText(requireContext(),
+                    getString(R.string.you_have_to_enter_an_email), Toast.LENGTH_LONG).show()
+            }else if (password.isNullOrEmpty()){
+                Toast.makeText(requireContext(),
+                    getString(R.string.you_have_to_enter_an_password), Toast.LENGTH_LONG).show()
             }
         }
     }
@@ -75,6 +81,10 @@ class SignUpPage : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    fun goToLoginPage(view: View){
+        requireActivity().supportFragmentManager.popBackStack()
     }
 
 }

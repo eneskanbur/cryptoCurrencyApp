@@ -5,6 +5,7 @@ import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.cryptocurrencyapp.R
 import com.example.cryptocurrencyapp.model.StockData
 import com.example.cryptocurrencyapp.service.HistoricalDataAPI
 import com.example.cryptocurrencyapp.service.HistoricalDataAPIService
@@ -22,10 +23,11 @@ class GraphPageViewModel : ViewModel(){
     val errorMessage = MutableLiveData<String>()
 
     fun getHistoricalData(context: Context,symbol : String){
+        val context = context
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 historicalDataLoading.postValue(true)
-                val getHistoricalData = historicalDataAPIService.getHistoricalPrice(symbol)
+                val getHistoricalData = historicalDataAPIService.getHistoricalPrice(symbol, context)
                 withContext(Dispatchers.Main) {
                     historicalDataLoading.value = false
                     historicalData.value = getHistoricalData
@@ -33,19 +35,19 @@ class GraphPageViewModel : ViewModel(){
             } catch (e: IOException) {
                 withContext(Dispatchers.Main) {
                     historicalDataLoading.value = false
-                    errorMessage.value = "İnternet bağlantısı hatası: ${e.message}"
+                    errorMessage.value = context.getString(R.string.internet_baglantisi_hatasi, e.message)
                     showToastMessage(context, errorMessage.value.toString())
                 }
             } catch (e: HttpException) {
                 withContext(Dispatchers.Main) {
                     historicalDataLoading.value = false
-                    errorMessage.value = "Sorgu Sınırına Ulaşıldı: ${e.message}"
+                    errorMessage.value = context.getString(R.string.sorgu_sinirina_ulasildi, e.message)
                     showToastMessage(context, errorMessage.value.toString())
                 }
             } catch (e: Exception) {
                 withContext(Dispatchers.Main) {
                     historicalDataLoading.value = false
-                    errorMessage.value = "Beklenmeyen hata: ${e.message}"
+                    errorMessage.value = context.getString(R.string.beklenmeyen_hata, e.message)
                     showToastMessage(context, errorMessage.value.toString())
                 }
             }
@@ -55,6 +57,5 @@ class GraphPageViewModel : ViewModel(){
     fun showToastMessage(context: Context,message : String){
         Toast.makeText(context,message,Toast.LENGTH_LONG).show()
     }
-
 
 }

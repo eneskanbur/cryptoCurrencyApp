@@ -18,8 +18,8 @@ import com.google.firebase.ktx.Firebase
 
 class LoginPage : Fragment() {
 
-    private var email : String = ""
-    private var password : String = ""
+    private var email : String? = null
+    private var password : String? = null
     private lateinit var auth: FirebaseAuth
 
     private var _binding: FragmentLoginPageBinding? = null
@@ -62,8 +62,8 @@ class LoginPage : Fragment() {
         email = binding.emailLoginText.text.toString()
         password = binding.passwordText.text.toString()
 
-        if (email.isNotEmpty() && password.isNotEmpty()){
-            auth.signInWithEmailAndPassword(email,password).addOnCompleteListener { task ->
+        if (!email.isNullOrEmpty() && !password.isNullOrEmpty()){
+            auth.signInWithEmailAndPassword(email!!,password!!).addOnCompleteListener { task ->
                 if (task.isSuccessful){
                     val action = LoginPageDirections.actionLoginPageToCurrencyList()
                     Navigation.findNavController(view).navigate(action)
@@ -72,10 +72,10 @@ class LoginPage : Fragment() {
                 Toast.makeText(requireContext(),exception.localizedMessage,Toast.LENGTH_LONG).show()
             }
         }else{
-            if (email.isEmpty()){
-                Toast.makeText(requireContext(),"You have to enter an email.", Toast.LENGTH_LONG).show()
-            }else if (password.isEmpty()){
-                Toast.makeText(requireContext(),"You have to enter an password.", Toast.LENGTH_LONG).show()
+            if (email.isNullOrEmpty()){
+                Toast.makeText(requireContext(),getString(R.string.you_have_to_enter_an_email), Toast.LENGTH_LONG).show()
+            }else if (password.isNullOrEmpty()){
+                Toast.makeText(requireContext(),getString(R.string.you_have_to_enter_an_password), Toast.LENGTH_LONG).show()
             }
         }
     }

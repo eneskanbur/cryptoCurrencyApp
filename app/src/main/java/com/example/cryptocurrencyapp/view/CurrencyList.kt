@@ -45,15 +45,21 @@ class CurrencyList : Fragment() {
         viewModel = ViewModelProvider(this)[CurrencyListViewModel::class.java]
         viewModel.getCurrencies(requireContext())
 
-        adapter = MyAdapter(currList)
-        binding.recyclerView.layoutManager = LinearLayoutManager(this@CurrencyList.context)
-        binding.recyclerView.adapter = adapter
+        with(binding) {
+            adapter = MyAdapter(currList)
+            recyclerView.layoutManager = LinearLayoutManager(this@CurrencyList.context)
+            recyclerView.adapter = adapter
+            appName.visibility = View.GONE
+            logOut.visibility = View.GONE
 
-        binding.refreshLayout.setOnRefreshListener {
-            binding.recyclerView.visibility = View.GONE
-            binding.ListProgressBar.visibility = View.VISIBLE
-            viewModel.getCurrencies(requireContext())
-            binding.refreshLayout.isRefreshing = false
+            refreshLayout.setOnRefreshListener {
+                recyclerView.visibility = View.GONE
+                appName.visibility = View.GONE
+                appName.visibility = View.GONE
+                ListProgressBar.visibility = View.VISIBLE
+                viewModel.getCurrencies(requireContext())
+                refreshLayout.isRefreshing = false
+            }
         }
 
         binding.logOut.setOnClickListener {
@@ -65,23 +71,26 @@ class CurrencyList : Fragment() {
 
     private fun observerLiveData(){
         viewModel.currencies.observe(viewLifecycleOwner){
-            //viewModel.downLoadCurrencyListHistory(requireContext())
-            //viewModel.saveCurrencyListHistory(requireContext())
-            //viewModel.updateCurrencies(requireContext())
             adapter = MyAdapter(it)
-            binding.recyclerView.layoutManager = LinearLayoutManager(this@CurrencyList.context)
-            binding.recyclerView.adapter = adapter
-            binding.logOut.visibility = View.VISIBLE
-            binding.recyclerView.visibility = View.VISIBLE
+            with(binding){
+                recyclerView.layoutManager = LinearLayoutManager(this@CurrencyList.context)
+                recyclerView.adapter = adapter
+                logOut.visibility = View.VISIBLE
+                appName.visibility = View.VISIBLE
+                recyclerView.visibility = View.VISIBLE
+            }
         }
 
         viewModel.currenciesLoading.observe(viewLifecycleOwner){
-            if (it){
-                binding.recyclerView.visibility = View.GONE
-                binding.logOut.visibility = View.GONE
-                binding.ListProgressBar.visibility = View.VISIBLE
-            }else{
-                binding.ListProgressBar.visibility = View.GONE
+            with(binding){
+                if (it){
+                    recyclerView.visibility = View.GONE
+                    logOut.visibility = View.GONE
+                    appName.visibility = View.GONE
+                    ListProgressBar.visibility = View.VISIBLE
+                }else{
+                    ListProgressBar.visibility = View.GONE
+                }
             }
         }
     }

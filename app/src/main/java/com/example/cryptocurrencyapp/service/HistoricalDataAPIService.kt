@@ -1,5 +1,7 @@
 package com.example.cryptocurrencyapp.service
 
+import android.content.Context
+import com.example.cryptocurrencyapp.R
 import com.example.cryptocurrencyapp.model.StockData
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -15,7 +17,7 @@ class HistoricalDataAPIService {
 
     private val api = retrofit.create(HistoricalDataAPI::class.java)
 
-    suspend fun getHistoricalPrice(symbol : String): StockData {
+    suspend fun getHistoricalPrice(symbol : String, context: Context): StockData {
         val calendar = Calendar.getInstance()
         calendar.add(Calendar.DAY_OF_YEAR, -10)
         val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
@@ -25,7 +27,7 @@ class HistoricalDataAPIService {
             interval = "1day",
             startDate = formattedDate,
             outputSize = "10",
-            apiKey = "b10affdca65045bcbcedbc8fa142556c"
+            apiKey = context.getString(R.string.b10affdca65045bcbcedbc8fa142556c)
         )
     }
 }

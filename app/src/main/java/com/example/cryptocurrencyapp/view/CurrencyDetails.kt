@@ -11,7 +11,9 @@ import androidx.appcompat.app.ActionBar
 import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
+import com.example.cryptocurrencyapp.R
 import com.example.cryptocurrencyapp.databinding.FragmentCurrencyDetailsBinding
+import com.example.cryptocurrencyapp.model.Currency
 import com.example.cryptocurrencyapp.model.StockData
 import com.example.cryptocurrencyapp.viewModels.CurrencyListViewModel
 import com.example.cryptocurrencyapp.viewModels.GraphPageViewModel
@@ -38,7 +40,6 @@ class CurrencyDetails : Fragment() {
     private lateinit var viewModelGraphPage : GraphPageViewModel
     private var xValues = arrayListOf<String>()
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -59,47 +60,56 @@ class CurrencyDetails : Fragment() {
         viewModel = ViewModelProvider(this)[CurrencyListViewModel::class.java]
 
         arguments?.let {
-            val currency = CurrencyDetailsArgs.fromBundle(it)
+            val currency = CurrencyDetailsArgs.fromBundle(it).currency
 
-            viewModelGraphPage.getHistoricalData(requireContext(),currency.currency.symbol)
-            obsereLiveData()
+            with(currency) {
+                viewModelGraphPage.getHistoricalData(requireContext(),symbol)
+                obsereLiveData()
+                setupAnimation()
+                setUI(CurrencyDetailsArgs.fromBundle(it).currency)
+            }
+        }
 
-            setupAnimation()
+        binding.backButton.setOnClickListener {
+            requireActivity().supportFragmentManager.popBackStack()
+        }
 
-            binding.textId.text = "ID: " + currency.currency.id
-            binding.textSymbol.text = "Symbol: " + currency.currency.symbol
-            binding.textName.text = "Name: " + currency.currency.name
+    }
+
+    private fun setUI(currency: Currency) = binding.run {
+
+        with(currency){
+            textId.text = getString(R.string.id, id)
+            textSymbol.text = getString(R.string.symbol, symbol)
+            textName.text = getString(R.string.name, name)
 
             Glide.with(requireContext())
-                .load(currency.currency.image)
-                .into(binding.textImage)
+                .load(image)
+                .into(textImage)
 
-            binding.textCurrentPrice.text = "Current Price: " + currency.currency.currentPrice.toString()
-            binding.textMarketCap.text = "Market Cap: " + currency.currency.marketCap.toString()
-            binding.textMarketCapRank.text = "Market Cap Rank: " + currency.currency.marketCapRank.toString()
-            binding.textFullyDilutedValuation.text = "Fully Diluted Valuation: " + currency.currency.fullyDilutedValuation.toString()
-            binding.textTotalVolume.text = "Total Volume: " + currency.currency.totalVolume.toString()
-            binding.textHigh24h.text = "High 24h: " + currency.currency.high24h.toString()
-            binding.textLow24h.text = "Low 24h: " + currency.currency.low24h.toString()
-            binding.textPriceChange24h.text = "Price Change 24h: " + currency.currency.priceChange24h.toString()
-            binding.textPriceChangePercentage24h.text = "Price Change Percentage 24h: " + currency.currency.priceChangePercentage24h.toString()
-            binding.textMarketCapChange24h.text = "Market Cap Change 24h: " + currency.currency.marketCapChange24h.toString()
-            binding.textMarketCapChangePercentage24h.text = "Market Cap Change Percentage 24h: " + currency.currency.marketCapChangePercentage24h.toString()
-            binding.textCirculatingSupply.text = "Circulating Supply: " + currency.currency.circulatingSupply.toString()
-            binding.textTotalSupply.text = "Total Supply: " + currency.currency.totalSupply.toString()
-            binding.textMaxSupply.text = "Max Supply: " + currency.currency.maxSupply.toString()
-            binding.textAth.text = "All-Time High (ATH): " + currency.currency.ath.toString()
-            binding.textAthChangePercentage.text = "ATH Change Percentage: " + currency.currency.athChangePercentage.toString()
-            binding.textAthDate.text = "ATH Date: " + currency.currency.athDate
-            binding.textAtl.text = "All-Time Low (ATL): " + currency.currency.atl.toString()
-            binding.textAtlChangePercentage.text = "ATL Change Percentage: " + currency.currency.atlChangePercentage.toString()
-            binding.textAtlDate.text = "ATL Date: " + currency.currency.atlDate
-            binding.textLastUpdated.text = "Last Updated: " + currency.currency.lastUpdated
-
-            binding.backButton.setOnClickListener {
-                requireActivity().supportFragmentManager.popBackStack()
-            }
-
+            textCurrentPrice.text = getString(R.string.current_price,currentPrice.toString())
+            textMarketCap.text = getString(R.string.market_cap, marketCap.toString())
+            textMarketCapRank.text = getString(R.string.market_cap_rank, marketCapRank.toString())
+            textFullyDilutedValuation.text = getString(R.string.fully_diluted_valuation, fullyDilutedValuation.toString())
+            textTotalVolume.text = getString(R.string.total_volume, totalVolume.toString())
+            textHigh24h.text = getString(R.string.high_24h, high24h.toString())
+            textLow24h.text = getString(R.string.low_24h, low24h.toString())
+            textPriceChange24h.text = getString(R.string.price_change_24h, priceChange24h.toString())
+            textPriceChangePercentage24h.text =
+                getString(R.string.price_change_percentage_24h, priceChangePercentage24h.toString())
+            textMarketCapChange24h.text = getString(R.string.market_cap_change_24h, marketCapChange24h.toString())
+            textMarketCapChangePercentage24h.text =
+                getString(R.string.market_cap_change_percentage_24h, marketCapChangePercentage24h.toString())
+            textCirculatingSupply.text = getString(R.string.circulating_supply, circulatingSupply.toString())
+            textTotalSupply.text = getString(R.string.total_supply, totalSupply.toString())
+            textMaxSupply.text = getString(R.string.max_supply, maxSupply.toString())
+            textAth.text = getString(R.string.all_time_high_ath, ath.toString())
+            textAthChangePercentage.text = getString(R.string.ath_change_percentage, athChangePercentage.toString())
+            textAthDate.text = getString(R.string.ath_date, athDate)
+            textAtl.text = getString(R.string.all_time_low_atl, atl.toString())
+            textAtlChangePercentage.text = getString(R.string.atl_change_percentage, atlChangePercentage.toString())
+            textAtlDate.text = getString(R.string.atl_date, atlDate)
+            textLastUpdated.text = getString(R.string.last_updated, lastUpdated)
         }
 
     }
@@ -128,38 +138,48 @@ class CurrencyDetails : Fragment() {
 
         Collections.sort(graphList,EntryXComparator())
         val dataSet = LineDataSet(graphList, "Price")
-        dataSet.color = Color.RED
-        dataSet.valueTextColor = Color.WHITE
-        dataSet.lineWidth = 2.5f
-        dataSet.fillAlpha = 110
-        dataSet.fillColor = Color.RED
+        with(dataSet){
+            color = Color.RED
+            valueTextColor = Color.WHITE
+            lineWidth = 2.5f
+            fillAlpha = 110
+            fillColor = Color.RED
+        }
+
 
         val lineData = LineData(dataSet)
         lineChart.data = lineData
 
         val description: Description = lineChart.description
-        description.text = "${data.meta.symbol} price history"
+        with(description){
+            text = getString(R.string.price_history, data.meta.symbol)
+            textSize = 14f
+            textColor = Color.WHITE
+            setPosition(450f, 30f)
+        }
         lineChart.description = description
-        description.textSize = 14f
-        description.textColor = Color.WHITE
-        description.setPosition(450f, 30f)
 
         val xAxis = lineChart.xAxis
-        xAxis.valueFormatter = IndexAxisValueFormatter(xValues)
-        xAxis.position = XAxis.XAxisPosition.BOTTOM
-        xAxis.setLabelCount(xValues.size, true)
-        xAxis.granularity = 15f
-        xAxis.textColor = Color.WHITE
+        with(xAxis){
+            valueFormatter = IndexAxisValueFormatter(xValues)
+            position = XAxis.XAxisPosition.BOTTOM
+            setLabelCount(xValues.size, true)
+            granularity = 15f
+            textColor = Color.WHITE
+        }
 
-        lineChart.legend.isEnabled = true
-        lineChart.legend.textSize = 14f
-        lineChart.axisLeft.textColor = Color.WHITE
-        lineChart.axisRight.setDrawLabels(false)
-        lineChart.legend.textColor = Color.WHITE
-        lineChart.legend.verticalAlignment = Legend.LegendVerticalAlignment.BOTTOM
-        lineChart.legend.horizontalAlignment = Legend.LegendHorizontalAlignment.CENTER
-        lineChart.animateXY(2000,2000)
-        lineChart.invalidate()
+        with(lineChart){
+            legend.isEnabled = true
+            legend.textSize = 14f
+            axisLeft.textColor = Color.WHITE
+            axisRight.setDrawLabels(false)
+            legend.textColor = Color.WHITE
+            legend.verticalAlignment = Legend.LegendVerticalAlignment.BOTTOM
+            legend.horizontalAlignment = Legend.LegendHorizontalAlignment.CENTER
+            animateXY(2000,2000)
+            invalidate()
+        }
+
     }
 
     private fun setupAnimation() {

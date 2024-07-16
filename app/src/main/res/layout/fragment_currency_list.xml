@@ -45,5 +45,18 @@
             app:layout_constraintBottom_toTopOf="@+id/recyclerView"
             app:layout_constraintEnd_toEndOf="@+id/recyclerView"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/app_Name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Krypto"
+            android:textColor="@color/colorPrimary"
+            android:textSize="60dp"
+            app:layout_constraintBottom_toBottomOf="@+id/logOut"
+            app:layout_constraintStart_toStartOf="@+id/recyclerView"
+            app:layout_constraintTop_toTopOf="@+id/logOut">
+
+        </TextView>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

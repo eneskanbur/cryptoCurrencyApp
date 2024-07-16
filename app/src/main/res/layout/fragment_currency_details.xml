@@ -30,12 +30,13 @@
 
     <Button
         android:id="@+id/back_button"
-        android:layout_width="80dp"
+        android:layout_width="wrap_content"
         android:layout_height="80dp"
-        android:background="@android:color/transparent"
+        android:backgroundTint="@color/colorPrimary"
+        android:textColor="@android:color/white"
         android:onClick="goBack"
         android:text="Back"
-        android:textSize="14dp"
+        android:textSize="18dp"
         app:iconPadding="1dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
