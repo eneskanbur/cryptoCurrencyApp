@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    tools:context=".view.CurrencyDetails">
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:orientation="horizontal"
+        android:gravity="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+        <ImageView
+            android:id="@+id/text_image"
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:contentDescription="Crypto Image"
+            android:scaleType="centerCrop" />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/back_button"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:background="@android:color/transparent"
+        android:onClick="goBack"
+        android:text="Back"
+        android:textSize="14dp"
+        app:iconPadding="1dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </Button>
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/graphAnimation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/lineChart"
+        app:layout_constraintEnd_toEndOf="@+id/lineChart"
+        app:layout_constraintStart_toStartOf="@+id/lineChart"
+        app:layout_constraintTop_toTopOf="@+id/lineChart"
+        app:lottie_autoPlay="true"
+        app:lottie_rawRes="@raw/animation">
+
+    </com.airbnb.lottie.LottieAnimationView>
+
+    <com.github.mikephil.charting.charts.LineChart
+        android:id="@+id/lineChart"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/scrollView2"
+        app:layout_constraintEnd_toEndOf="@+id/scrollView2"
+        app:layout_constraintStart_toStartOf="@+id/scrollView2"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+
+    </com.github.mikephil.charting.charts.LineChart>
+
+    <ScrollView
+        android:id="@+id/scrollView2"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHeight_default="wrap"
+        app:layout_constraintTop_toBottomOf="@+id/lineChart"
+        tools:layout_editor_absoluteX="16dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:elevation="4dp"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                android:id="@+id/text_id"
+                style="@style/CryptoDetailText"
+                android:text="ID: " />
+
+            <TextView
+                android:id="@+id/text_symbol"
+                style="@style/CryptoDetailText"
+                android:text="Symbol: " />
+
+            <TextView
+                android:id="@+id/text_name"
+                style="@style/CryptoDetailText"
+                android:text="Name: " />
+
+            <TextView
+                android:id="@+id/textCurrentPrice"
+                style="@style/CryptoDetailText"
+                android:text="Current Price: " />
+
+            <TextView
+                android:id="@+id/text_market_cap"
+                style="@style/CryptoDetailText"
+                android:text="Market Cap: " />
+
+            <TextView
+                android:id="@+id/text_market_cap_rank"
+                style="@style/CryptoDetailText"
+                android:text="Market Cap Rank: " />
+
+            <TextView
+                android:id="@+id/text_fully_diluted_valuation"
+                style="@style/CryptoDetailText"
+                android:text="Fully Diluted Valuation: " />
+
+            <TextView
+                android:id="@+id/text_total_volume"
+                style="@style/CryptoDetailText"
+                android:text="Total Volume: " />
+
+            <TextView
+                android:id="@+id/text_high_24h"
+                style="@style/CryptoDetailText"
+                android:text="High 24h: " />
+
+            <TextView
+                android:id="@+id/text_low_24h"
+                style="@style/CryptoDetailText"
+                android:text="Low 24h: " />
+
+            <TextView
+                android:id="@+id/text_price_change_24h"
+                style="@style/CryptoDetailText"
+                android:text="Price Change 24h: " />
+
+            <TextView
+                android:id="@+id/text_price_change_percentage_24h"
+                style="@style/CryptoDetailText"
+                android:text="Price Change Percentage 24h: " />
+
+            <TextView
+                android:id="@+id/text_market_cap_change_24h"
+                style="@style/CryptoDetailText"
+                android:text="Market Cap Change 24h: " />
+
+            <TextView
+                android:id="@+id/text_market_cap_change_percentage_24h"
+                style="@style/CryptoDetailText"
+                android:text="Market Cap Change Percentage 24h: " />
+
+            <TextView
+                android:id="@+id/text_circulating_supply"
+                style="@style/CryptoDetailText"
+                android:text="Circulating Supply: " />
+
+            <TextView
+                android:id="@+id/text_total_supply"
+                style="@style/CryptoDetailText"
+                android:text="Total Supply: " />
+
+            <TextView
+                android:id="@+id/text_max_supply"
+                style="@style/CryptoDetailText"
+                android:text="Max Supply: " />
+
+            <TextView
+                android:id="@+id/text_ath"
+                style="@style/CryptoDetailText"
+                android:text="All-Time High (ATH): " />
+
+            <TextView
+                android:id="@+id/text_ath_change_percentage"
+                style="@style/CryptoDetailText"
+                android:text="ATH Change Percentage: " />
+
+            <TextView
+                android:id="@+id/text_ath_date"
+                style="@style/CryptoDetailText"
+                android:text="ATH Date: " />
+
+            <TextView
+                android:id="@+id/text_atl"
+                style="@style/CryptoDetailText"
+                android:text="All-Time Low (ATL): " />
+
+            <TextView
+                android:id="@+id/text_atl_change_percentage"
+                style="@style/CryptoDetailText"
+                android:text="ATL Change Percentage: " />
+
+            <TextView
+                android:id="@+id/text_atl_date"
+                style="@style/CryptoDetailText"
+                android:text="ATL Date: " />
+
+            <TextView
+                android:id="@+id/text_last_updated"
+                style="@style/CryptoDetailText"
+                android:text="Last Updated: " />
+        </LinearLayout>
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>
