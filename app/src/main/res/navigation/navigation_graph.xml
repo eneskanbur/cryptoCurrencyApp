@@ -41,6 +41,11 @@
         <action
             android:id="@+id/action_currencyList_to_currencyDetails"
             app:destination="@id/currencyDetails" />
+        <action
+            android:id="@+id/action_currencyList_to_loginPage"
+            app:destination="@id/loginPage"
+            app:popUpTo="@id/currencyList"
+            app:popUpToInclusive="true"/>
     </fragment>
     <fragment
         android:id="@+id/currencyDetails"

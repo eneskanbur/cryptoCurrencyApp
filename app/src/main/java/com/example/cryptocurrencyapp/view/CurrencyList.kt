@@ -1,5 +1,7 @@
 package com.example.cryptocurrencyapp.view
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.os.Parcelable
 import androidx.fragment.app.Fragment
@@ -7,7 +9,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.NavOptions
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.cryptocurrencyapp.R
 import com.example.cryptocurrencyapp.adapter.MyAdapter
 import com.example.cryptocurrencyapp.databinding.FragmentCurrencyListBinding
 import com.example.cryptocurrencyapp.model.Currency
@@ -24,9 +29,12 @@ class CurrencyList : Fragment() {
     private var currList : List<Currency> = emptyList()
     private lateinit var viewModel : CurrencyListViewModel
     private lateinit var adapter : MyAdapter
+    private lateinit var sharedPreferences: SharedPreferences
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        sharedPreferences = requireActivity().getPreferences(Context.MODE_PRIVATE)
     }
 
     override fun onCreateView(
@@ -103,7 +111,11 @@ class CurrencyList : Fragment() {
 
     fun logOut(view: View){
         Firebase.auth.signOut()
-        activity?.finish()
+        with(sharedPreferences.edit()){
+            putBoolean("user",false)
+            apply()
+        }
+        findNavController().navigate(CurrencyListDirections.actionCurrencyListToLoginPage())
     }
 
 }
